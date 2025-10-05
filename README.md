@@ -38,13 +38,13 @@ npm init -y
 
 ### Install Hardhat:
 ```
-npm install --save-dev hardhat
+npm install --save-dev hardhat@2.26.3
 ```
 (This downloads Hardhat. It might take a minute.)
 
 ### Set up Hardhat:
 ```
-npx hardhat --init
+npx hardhat init
 ```
 - Select "Create a JavaScript project" (or TypeScript if you prefer, but JS is simpler for beginners).
 - Accept defaults for the rest (yes to everything).
@@ -55,3 +55,7 @@ npx hardhat --init
 - Use `npx hardhat compile` to compile your contracts.
 - Use `npx hardhat test` to run tests.
 - For deployment, refer to Hardhat documentation.
+
+
+
+contract is deployed at 0x5FbDB2315678afecb367f032d93F642f64180aa3
