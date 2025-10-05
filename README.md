@@ -63,11 +63,11 @@ contract is deployed at 0x5FbDB2315678afecb367f032d93F642f64180aa3
 Part 2: Understanding the Project Files
 Your project folder now contains several important files and directories.
 
-contracts/Bank.sol: The Smart Contract. This is the heart of our application, containing all the rules of our bank written in Solidity.
-test/Bank.test.js: The Test Script. This file contains automated tests that verify our contract works correctly and securely in all situations.
-scripts/deploy.js: The Deployment Script. This script takes our compiled contract and publishes it to a blockchain.
-hardhat.config.js: The Configuration File. This file tells Hardhat how to behave—for example, which version of Solidity to use.
-package.json: The Project Manifest. This lists our project's dependencies, like Hardhat.
+```contracts/Bank.sol ```: The Smart Contract. This is the heart of our application, containing all the rules of our bank written in Solidity.
+```test/Bank.test.js ```: The Test Script. This file contains automated tests that verify our contract works correctly and securely in all situations.
+```scripts/deploy.js```: The Deployment Script. This script takes our compiled contract and publishes it to a blockchain.
+```hardhat.config.js```: The Configuration File. This file tells Hardhat how to behave—for example, which version of Solidity to use.
+```package.json```: The Project Manifest. This lists our project's dependencies, like Hardhat.
 
 Part 3: Running the Project (Step-by-Step Guide)
 Follow these commands in order from your project's root directory (blockchain-bank).
@@ -76,24 +76,27 @@ Step 1: Compile the Smart Contract
 This command reads your Bank.sol file, checks for any errors, and converts it into a format that the Ethereum Virtual Machine (EVM) can understand (bytecode).
 
 Bash
-
+```
 npx hardhat compile
+```
 You should see a message like Compiled 1 Solidity file successfully.
 
 Step 2: Run the Automated Tests
 This is the most important quality check. This command will execute the test/Bank.test.js script. It will automatically deploy a fresh version of your contract to a temporary, in-memory blockchain for each test case, ensuring the results are clean and reliable.
 
 Bash
-
+```
 npx hardhat test
+```
 The expected output for this command is detailed in the Appendix. This is the definitive proof that your contract works.
 
 Step 3: Start a Local Blockchain Node
 Now, let's run a simulated blockchain on our own computer. This is a safe and free way to deploy and interact with contracts as if they were on the real Ethereum network.
 
 Bash
-
+```
 npx hardhat node
+```
 This will start a local node and list 20 test accounts, each pre-loaded with 10000 fake ETH. Keep this terminal window open!
 
 Step 4: Deploy the Contract to the Local Node
@@ -102,14 +105,15 @@ Open a new, second terminal window and navigate to your project folder again.
 Run the deployment script, telling it to target our local network (--network localhost).
 
 Bash
-
+```
 npx hardhat run scripts/deploy.js --network localhost
+```
 This will deploy the contract and print its unique address. You will need this address for the manual interaction scripts, as explained in the Appendix.
 
 
 Part 4: Explanation of the Smart Contract Code (Bank.sol)
 This section breaks down the code inside contracts/Bank.sol to explain how it works.
-
+```
 solidity
 
 // SPDX-License-Identifier: UNLICENSED
@@ -159,6 +163,7 @@ contract Bank {
         return balanceOf[msg.sender];
     }
 }
+```
 Appendix: Detailed Script Outputs and Explanations
 This section details the expected output for each script when run in a clean environment. This is crucial for understanding what "correct" looks like and for diagnosing issues.
 
@@ -168,8 +173,9 @@ This is the most important and reliable way to verify the contract. It runs all 
 ➡️ Command to Run:
 
 Bash
-
+```
 npx hardhat test
+```
 ✅ Expected Output:
 
 text
@@ -200,15 +206,17 @@ Therefore, you must follow this workflow every time you want to run an interacti
 Start the Local Node:
 
 Bash
-
+```
 npx hardhat node
+```
 (Keep this terminal running in the background.)
 
 Deploy the Contract: In a new, second terminal, run the deployment script.
 
 Bash
-
+```
 npx hardhat run scripts/deploy.js --network localhost
+```
 Copy the New Address: Look at the output from the previous command and copy the new contract address.
 
 text
@@ -219,21 +227,24 @@ Update the Script File:
 Open the script you want to run (e.g., scripts/testBank.js) in VS Code.
 Find this line near the top:
 JavaScript
-
+```
 const bankAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+```
 Replace the old address with the new one you just copied:
 JavaScript
-
+```
 const bankAddress = "0xDc64a140Aa3E981100a9becA4E685f962f0cF6C9"; // <-- PASTE THE NEW ADDRESS HERE
+```
 Save the file.
 Run the Script: Now you can safely run the interaction script in your second terminal.
 
 Bash
-
+```
 npx hardhat run scripts/testBank.js --network localhost
+```
 Expected Output for scripts/testBank.js (Simple Script)
 ✅ Correct Output (after updating the address):
-
+```
 text
 
 Using account: 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266
@@ -260,5 +271,6 @@ Account1 withdrew 0.5 ETH
 Account1 balance after withdrawal: 0.5 ETH (expected: 0.5)
 Invalid withdrawal failed as expected: reverted with reason string 'Insufficient balance'
 Account2 final balance: 1.0 ETH (expected: 1)
+```
 🔍 Explanation of the "Invalid withdrawal failed" message:
 This is the desired outcome. The catch block in our script successfully caught the error from the blockchain, proving our contract's require() statement is working correctly and preventing theft. A failed transaction does not change any balances, which is why Account 2's final balance remains 1.0 ETH.
